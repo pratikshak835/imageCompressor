@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   XFile? compressedImage;
   File? image;
 
-  Future<void> compressImage(File file) async {
+  compressImage(File file) async {
     final filePath = file.absolute.path;
     final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
     final splitted = filePath.substring(0, (lastIndex));
@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
         minWidth: 1000, minHeight: 1000, quality: 70);
   }
 
-  Future<void> _saveLocalImage() async {
+  saveLocalImage() async {
     try {
       GallerySaver.saveImage(compressedImage!.path);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<File> _pickFile() async {
+  Future<File> pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
               onPressed: () {
-                _pickFile().then((compressedFile) {
+                pickFile().then((compressedFile) {
                   setState(() {
                     image = compressedFile;
                   });
@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          onPressed: _saveLocalImage,
+                          onPressed: saveLocalImage,
                           child: const Text("Download")),
                     )
                   ])
